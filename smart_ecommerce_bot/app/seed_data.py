@@ -1,9 +1,14 @@
 from sqlmodel import Session
+from sqlmodel import select
 
 from app.models import Product
 
 
 def seed_products(session: Session):
+
+    existing_product = session.exec(select(Product)).first()
+    if existing_product:
+        return  # Skip seeding if database already has data
 
     products = [
         Product(
